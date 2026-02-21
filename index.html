@@ -2,14 +2,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Muhammed Sufad P N </title>
+<title>Muhammed Sufad P N | Cinematic Portfolio</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 
-/* ===== THEME ===== */
+/* ===== GLOBAL ===== */
 :root{ --accent:#6ecbff; }
 body.accounting{ --accent:#ffd86e; }
 
@@ -19,7 +19,107 @@ font-family:Segoe UI,Arial;
 background:#030303;
 color:white;
 overflow-x:hidden;
-transition:.5s;
+perspective:1200px;
+}
+
+/* ===== CINEMA AAA INTRO ===== */
+#introLoader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999999;
+overflow:hidden;
+transition:opacity 1.2s ease,visibility 1.2s ease;
+}
+
+#introLoader.hide{
+opacity:0;
+visibility:hidden;
+}
+
+/* particles canvas */
+#particles{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+}
+
+.intro-content{
+position:relative;
+text-align:center;
+z-index:2;
+animation:introZoom 2.5s ease;
+}
+
+.intro-title{
+font-size:52px;
+letter-spacing:5px;
+text-shadow:0 0 30px var(--accent);
+animation:glowPulse 2s infinite alternate;
+}
+
+.intro-sub{
+opacity:.6;
+margin-top:14px;
+}
+
+/* light streak sweep */
+.intro-content::before{
+content:"";
+position:absolute;
+top:0;
+left:-120%;
+width:60%;
+height:100%;
+background:linear-gradient(120deg,transparent,
+rgba(255,255,255,0.35),transparent);
+transform:skewX(-25deg);
+animation:lightSweep 2.5s ease forwards;
+}
+
+@keyframes lightSweep{
+0%{left:-120%;}
+100%{left:140%;}
+}
+
+@keyframes glowPulse{
+0%{text-shadow:0 0 15px var(--accent);}
+100%{text-shadow:0 0 50px var(--accent);}
+}
+
+@keyframes introZoom{
+0%{transform:scale(.6);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+/* ===== HERO ===== */
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:radial-gradient(circle at center,#111,#000);
+transform:scale(1.15);
+opacity:0;
+transition:1.4s ease;
+}
+.hero.reveal{
+transform:scale(1);
+opacity:1;
+}
+
+.hero h1{
+font-size:64px;
+text-shadow:0 0 25px var(--accent);
 }
 
 /* ===== NAVBAR ===== */
@@ -45,37 +145,16 @@ border-radius:20px;
 cursor:pointer;
 }
 
-/* ===== HERO ===== */
-.hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-background:radial-gradient(circle at center,#111,#000);
-}
-.hero h1{
-font-size:64px;
-letter-spacing:4px;
-text-shadow:0 0 25px var(--accent);
-}
-
 /* ===== SECTIONS ===== */
 section{padding:120px 10%;}
-h2{
-border-left:4px solid var(--accent);
-padding-left:12px;
-}
+h2{border-left:4px solid var(--accent);padding-left:12px;}
 
-/* ===== GRID ===== */
 .grid{
 display:flex;
 flex-wrap:wrap;
 gap:25px;
 }
 
-/* ===== SKILLS ===== */
 .card{
 flex:1 1 260px;
 padding:30px;
@@ -92,32 +171,22 @@ transition:.4s;
 transform:translateY(-12px);
 box-shadow:0 0 25px var(--accent);
 }
-.card i{
-font-size:28px;
-color:var(--accent);
-}
+.card i{color:var(--accent);font-size:26px;}
 
-/* ===== GOD LEVEL PROJECTS ===== */
-.project-card{
-flex:1 1 300px;
-cursor:pointer;
-perspective:1000px; /* needed for 3D */
-}
+/* ===== PROJECTS ===== */
+.project-card{flex:1 1 300px;cursor:pointer;perspective:1000px;}
 
 .project-thumb{
 position:relative;
 overflow:hidden;
 border-radius:18px;
-transform-style:preserve-3d;
-transition:transform .2s ease-out;
+transition:.2s;
 }
 
-/* breathing zoom */
 .project-thumb img{
 width:100%;
 display:block;
 animation:breathZoom 8s ease-in-out infinite;
-transition:1.2s;
 filter:brightness(.75);
 }
 
@@ -127,7 +196,6 @@ filter:brightness(.75);
 100%{transform:scale(1);}
 }
 
-/* overlay title */
 .overlay-title{
 position:absolute;
 bottom:0;
@@ -135,54 +203,14 @@ left:0;
 width:100%;
 padding:16px;
 background:linear-gradient(transparent,rgba(0,0,0,0.85));
-font-size:15px;
 opacity:0;
 transform:translateY(20px);
 transition:.4s;
 }
 
-.project-card:hover img{
-transform:scale(1.12);
-filter:brightness(1);
-}
 .project-card:hover .overlay-title{
 opacity:1;
 transform:translateY(0);
-}
-
-/* light sweep */
-.project-thumb::before{
-content:"";
-position:absolute;
-top:0;
-left:-120%;
-width:60%;
-height:100%;
-background:linear-gradient(120deg,transparent,
-rgba(255,255,255,0.25),transparent);
-transform:skewX(-25deg);
-transition:.8s;
-}
-.project-card:hover .project-thumb::before{
-left:140%;
-}
-
-.project-card:hover{
-box-shadow:0 0 25px var(--accent);
-}
-
-/* ===== MODAL ===== */
-#redirectModal{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.85);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:99999;
 }
 
 /* ===== MASCOT ===== */
@@ -196,7 +224,6 @@ border-radius:20px;
 display:flex;
 gap:10px;
 align-items:center;
-cursor:pointer;
 }
 .mascot img{width:60px;border-radius:12px;}
 
@@ -207,6 +234,15 @@ cursor:pointer;
 
 <body>
 
+<!-- ===== CINEMA AAA INTRO ===== -->
+<div id="introLoader">
+<canvas id="particles"></canvas>
+<div class="intro-content">
+<h1 class="intro-title">MUHAMMED SUFAD P N</h1>
+<p class="intro-sub">Cinematic Portfolio Loading...</p>
+</div>
+</div>
+
 <div class="navbar">
 <a href="#">Home</a>
 <a href="#skills">Skills</a>
@@ -215,22 +251,16 @@ cursor:pointer;
 <button class="theme-btn" onclick="toggleTheme()">Switch Theme</button>
 </div>
 
-<div class="hero">
+<div class="hero" id="hero">
 <h1>MUHAMMED SUFAD P N</h1>
 <p>Cinematic Editor • Motion Designer • BCom PA</p>
 </div>
 
 <section id="skills">
 <h2>Skills</h2>
-
-<h3>🎬 Editing</h3>
 <div class="grid">
 <div class="card"><i class="fa-solid fa-film"></i>After Effects</div>
 <div class="card"><i class="fa-solid fa-video"></i>Premiere Pro</div>
-</div>
-
-<h3>📊 Accounting</h3>
-<div class="grid">
 <div class="card"><i class="fa-solid fa-calculator"></i>Tally Prime</div>
 <div class="card"><i class="fa-solid fa-chart-line"></i>Sage</div>
 <div class="card"><i class="fa-solid fa-file-invoice-dollar"></i>QuickBooks</div>
@@ -240,33 +270,13 @@ cursor:pointer;
 
 <section id="projects">
 <h2>Project Showcase</h2>
-
 <div class="grid">
-
-<div class="project-card" onclick="confirmRedirect('https://youtu.be/4f8hSqL5nFA')">
-<div class="project-thumb"><img src="https://i.ibb.co/BVzJRymN/joat-thum-00000.png"><div class="overlay-title">Jack Of All Trades</div></div>
+<div class="project-card">
+<div class="project-thumb">
+<img src="https://i.ibb.co/BVzJRymN/joat-thum-00000.png">
+<div class="overlay-title">Jack Of All Trades</div>
 </div>
-
-<div class="project-card" onclick="confirmRedirect('https://youtu.be/YoQyneigf58')">
-<div class="project-thumb"><img src="https://i.ibb.co/K3S22W9/zoro-thumb-jpg-00000.jpg"><div class="overlay-title">Zoro Edit</div></div>
 </div>
-
-<div class="project-card" onclick="confirmRedirect('https://youtu.be/6wTfB3fEM4g')">
-<div class="project-thumb"><img src="https://i.ibb.co/FjX0z9L/Comp-1-00000.png"><div class="overlay-title">Fern x Stark</div></div>
-</div>
-
-<div class="project-card" onclick="confirmRedirect('https://youtu.be/q1ub0FS5FCg')">
-<div class="project-thumb"><img src="https://i.ibb.co/Pzwm4T57/sl-s-v-b-00046.png"><div class="overlay-title">Solo Levelling</div></div>
-</div>
-
-<div class="project-card" onclick="confirmRedirect('https://youtu.be/2OIyVl_O4FE')">
-<div class="project-thumb"><img src="https://i.ibb.co/WN5642kL/00000.png"><div class="overlay-title">Solo Levelling</div></div>
-</div>
-
-<div class="project-card" onclick="confirmRedirect('https://youtu.be/ldzJvTGeiU8')">
-<div class="project-thumb"><img src="https://i.ibb.co/TBjbzcTS/alya-thumb-00000.png"><div class="overlay-title">Alya Edit</div></div>
-</div>
-
 </div>
 </section>
 
@@ -280,67 +290,65 @@ cursor:pointer;
 
 <div class="footer">© Muhammed Sufad P N</div>
 
-<div id="redirectModal">
-<div style="background:#111;padding:25px;border-radius:14px;text-align:center;">
-<p>Open this edit on YouTube?</p>
-<button onclick="goToVideo()" style="background:#6ecbff;padding:8px 14px;border:none;border-radius:8px;">Watch</button>
-<button onclick="closeModal()" style="background:#333;padding:8px 14px;border:none;border-radius:8px;">Cancel</button>
-</div>
-</div>
-
 <div class="mascot">
 <img src="https://i.imgur.com/2yYayZk.png">
-<div id="mascotText"></div>
+<div>Welcome to my cinematic portfolio 🎬</div>
 </div>
 
 <script>
 
-/* THEME */
+/* ===== CINEMA AAA PARTICLES ===== */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<80;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2+1,
+v:Math.random()*0.3
+});
+}
+
+function animateParticles(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="rgba(110,203,255,0.6)";
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+p.y-=p.v;
+if(p.y<0)p.y=canvas.height;
+});
+requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* ===== INTRO REVEAL ===== */
+window.addEventListener("load",()=>{
+setTimeout(()=>{
+document.getElementById("introLoader").classList.add("hide");
+document.getElementById("hero").classList.add("reveal");
+},2600);
+});
+
+/* ===== THEME SWITCH ===== */
 function toggleTheme(){
 document.body.classList.toggle("accounting");
 }
 
-/* REDIRECT */
-let selectedVideo="";
-function confirmRedirect(link){
-selectedVideo=link;
-document.getElementById("redirectModal").style.display="flex";
-}
-function closeModal(){
-document.getElementById("redirectModal").style.display="none";
-}
-function goToVideo(){
-window.open(selectedVideo,"_blank");
-closeModal();
-}
-
-/* 3D PARALLAX SYSTEM */
-document.querySelectorAll(".project-thumb").forEach(card=>{
-card.addEventListener("mousemove",(e)=>{
-const rect=card.getBoundingClientRect();
-const x=(e.clientX-rect.left)/rect.width;
-const y=(e.clientY-rect.top)/rect.height;
-const rotateY=(x-0.5)*12;
-const rotateX=(0.5-y)*12;
-card.style.transform=`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+/* ===== DEPTH SCROLL ===== */
+window.addEventListener("scroll",()=>{
+const y=window.scrollY;
+document.querySelector(".hero").style.transform=`translateY(${y*0.15}px)`;
+document.querySelector("#skills").style.transform=`translateY(${y*0.05}px)`;
+document.querySelector("#projects").style.transform=`translateY(${y*-0.05}px)`;
+document.querySelector("#contact").style.transform=`translateY(${y*-0.1}px)`;
 });
-card.addEventListener("mouseleave",()=>{
-card.style.transform="rotateX(0deg) rotateY(0deg)";
-});
-});
-
-/* MASCOT TEXT */
-const text="Welcome🎬";
-let i=0;
-function typeText(){
-if(i<text.length){
-document.getElementById("mascotText").innerHTML+=text.charAt(i);
-i++;
-setTimeout(typeText,40);
-}}
-typeText();
 
 </script>
-
 </body>
 </html>
